@@ -1,0 +1,56 @@
+html,body{margin:0;height:100%;overflow:hidden;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:#cfdbe6}
+#view{position:absolute;inset:0}
+#panel{position:absolute;top:12px;left:12px;width:310px;max-height:calc(100% - 70px);overflow:auto;background:rgba(255,255,255,.93);border-radius:10px;padding:12px 14px;box-shadow:0 2px 12px rgba(0,0,0,.2);font-size:13px}
+h1{font-size:19px;margin:0}
+.tag{font-size:11px;background:#ca7fbe;color:#fff;border-radius:4px;padding:1px 6px;vertical-align:middle}
+.sub{margin:2px 0 8px;color:#555}
+.group{border-top:1px solid #ddd;padding:7px 0}
+.group b{display:block;margin-bottom:4px}
+label{display:block;cursor:pointer;line-height:1.6}
+.btns button{margin:2px 2px 2px 0;border:1px solid #bbb;background:#f6f6f6;border-radius:5px;padding:3px 8px;cursor:pointer}
+.btns button:hover{background:#e8e8e8}
+.badge{font-size:10px;border-radius:3px;padding:0 4px;color:#fff;white-space:nowrap}
+.badge.rt{background:#1a8f3c}.badge.plan{background:#888}
+.legend{color:#555;margin-top:4px;font-size:11px}
+#departures table{width:100%;border-collapse:collapse;margin-top:6px}
+#departures td{padding:2px 3px;border-bottom:1px solid #eee;vertical-align:top}
+.line{display:inline-block;min-width:28px;text-align:center;border-radius:3px;color:#fff;font-weight:600;font-size:12px}
+.late{color:#c0392b;font-weight:600}.ontime{color:#1a8f3c}
+.cancel{text-decoration:line-through;color:#999}
+select{width:100%;padding:3px}
+#load-status{color:#777;font-size:11px;border-top:1px solid #ddd;padding-top:6px}
+#info{position:absolute;top:12px;right:12px;width:270px;background:rgba(255,255,255,.95);border-radius:10px;padding:10px 12px;box-shadow:0 2px 12px rgba(0,0,0,.2);font-size:13px}
+#info h3{margin:0 0 6px;font-size:15px}
+#info .close{float:right;cursor:pointer;border:none;background:none;font-size:16px}
+#info table td{padding:1px 4px;vertical-align:top}
+#attribution{position:absolute;left:0;right:0;bottom:0;background:rgba(255,255,255,.85);font-size:10.5px;padding:4px 10px;color:#333}
+#attribution a{color:#225}
+.vlabel{font:600 11px system-ui,sans-serif;color:#fff;padding:1px 5px;border-radius:3px;white-space:nowrap;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+.vlabel.plan{opacity:.75;border:1px dashed #fff}
+.slabel{font:12px system-ui,sans-serif;background:rgba(255,255,255,.9);color:#222;padding:1px 6px;border-radius:3px;border-left:3px solid #003a80;white-space:nowrap;cursor:pointer}
+.slabel:hover{background:#fff}
+
+.timerow{display:flex;align-items:center;gap:6px;font-weight:600}
+.timerow button{margin-left:auto;border:1px solid #bbb;background:#f6f6f6;border-radius:5px;padding:2px 10px;cursor:pointer}
+#time-slider{width:100%;margin:6px 0 0}
+.ticks{display:flex;justify-content:space-between;font-size:10px;color:#777;margin-bottom:3px}
+.small{font-size:11px;color:#555}
+#weather{margin:6px 0;background:#f3f6fa;border-radius:6px;padding:6px 8px}
+.wx-main{display:flex;align-items:center;gap:8px;font-size:14px}
+.wx-ico{font-size:22px}.wx-temp{font-size:20px;font-weight:700}
+table.wx{width:100%;font-size:12px;border-collapse:collapse;margin:3px 0}
+table.wx td{padding:1px 2px}table.wx td:first-child{color:#666;width:42%}
+#weather small{color:#666;font-size:10.5px}
+
+/* Iteration 3 */
+.badge.rt2 { background: #2e7d6b; color: #fff; }
+.vlabel.late { box-shadow: 0 0 0 2px #e53935; }
+.vlabel.sel { outline: 2px solid #fff; outline-offset: 1px; transform: scale(1.15); }
+.vlabel { pointer-events: auto; cursor: pointer; }
+#info h3 .line, #departures .line { display: inline-block; min-width: 2.2em; text-align: center; color: #fff; border-radius: 3px; padding: 0 4px; font-weight: 700; }
+#info table td:first-child { color: #9aa; padding-right: 8px; white-space: nowrap; }
+#info .hint { margin: 6px 0 0; font-size: 12px; } #info .hint a { color: #8cf; }
+#info .close { float: right; }
+tr.cancel td { text-decoration: line-through; opacity: 0.7; } tr.cancel td:nth-child(4) { text-decoration: none; }
+#fps { float: right; opacity: 0.7; font-weight: normal; }
+#quality { margin-left: 4px; }

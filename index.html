@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Riedberg 3D – Prototyp</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<div id="view"></div>
+<div id="panel">
+  <h1>Riedberg 3D <span class="tag">Prototyp</span></h1>
+  <p class="sub">Frankfurt am Main · Uni Campus Riedberg · Riedbergplatz · U8/U9</p>
+  <div class="group">
+    <b>Ansicht</b>
+    <div class="btns">
+      <button data-view="riedbergplatz">Riedbergplatz</button>
+      <button data-view="campus">Uni Campus</button>
+      <button data-view="overview">Übersicht</button>
+      <button data-view="nah">Nahansicht</button>
+    </div>
+  </div>
+  <div class="group">
+    <b>Ebenen</b>
+    <label><input type="checkbox" id="l-buildings" checked> Gebäude (LoD2)</label>
+    <label><input type="checkbox" id="l-terrain" checked> Gelände (DGM1)</label>
+    <label><input type="checkbox" id="l-ortho" checked> Luftbild (DOP20, auch auf Dächern)</label>
+    <label><input type="checkbox" id="l-streets" checked> Straßen, Gehwege, Gleise (OSM)</label>
+    <label><input type="checkbox" id="l-furniture" checked> Laternen &amp; Stadtmöbel (OSM + ergänzt)</label>
+    <label><input type="checkbox" id="l-trees" checked> Bäume (Baumkataster)</label>
+    <label><input type="checkbox" id="l-stops" checked> Haltestellen</label>
+    <label><input type="checkbox" id="l-lines" checked> Linienverläufe</label>
+    <label><input type="checkbox" id="l-vehicles" checked> Fahrzeuge</label>
+    <label><input type="checkbox" id="l-shadows" checked> Schatten</label>
+  </div>
+  <div class="group">
+    <b>Grafik</b> <span id="fps" class="small"></span>
+    <label class="small">Qualität:
+      <select id="quality"><option value="mobil">Mobil</option><option value="niedrig">Niedrig</option><option value="standard">Standard</option><option value="hoch">Hoch</option></select></label>
+    <div class="legend">Hoch: Umgebungsverdeckung (GTAO), MSAA, feinere Schatten · Standard: GTAO + SMAA · Niedrig: SMAA · Mobil: ohne Nachbearbeitung. Wird im Browser gespeichert.</div>
+  </div>
+  <div class="group">
+    <b>Zeit &amp; Wetter</b>
+    <div class="timerow"><span id="clock">–</span> <span id="timemode" class="badge rt">Echtzeit</span> <button id="btn-now" title="Zurück zur aktuellen Uhrzeit">Jetzt</button></div>
+    <input type="range" id="time-slider" min="0" max="1435" step="5" value="720" aria-label="Uhrzeit (Europe/Berlin)">
+    <div class="ticks"><span>0</span><span>6</span><span>12</span><span>18</span><span>24 Uhr</span></div>
+    <div id="suninfo" class="small"></div>
+    <div id="weather">Lade Wetter …</div>
+    <label class="small">Effekt-Vorschau (simuliert):
+      <select id="wx-preview"><option value="">Live-Wetter (DWD)</option><option value="klar">Klar</option><option value="bewoelkt">Bedeckt</option>
+      <option value="regen">Regen</option><option value="schnee">Schnee</option><option value="nebel">Nebel</option><option value="gewitter">Gewitter</option></select></label>
+    <div class="legend">Uhrzeit-Regler steuert Sonne, Schatten, Himmel und Nachtbeleuchtung. ÖPNV zeigt immer die aktuelle Echtzeit.</div>
+  </div>
+  <div class="group">
+    <b>ÖPNV</b>
+    <div id="rt-status">Lade Fahrzeugdaten …</div>
+    <div class="legend"><span class="badge rt">gtfs.de</span> Verspätung/Ausfall aus SIRI Hessen (gtfs.de-Echtzeit) · <span class="badge rt2">Transitous-Echtzeit</span> Ersatz · <span class="badge plan">Fahrplan</span> nur Soll-Fahrplan. Fahrzeug anklicken: Details + Kamera folgt (Esc beendet).</div>
+  </div>
+  <div class="group">
+    <b>Abfahrten</b>
+    <select id="stop-select">
+      <option value="de-DELFI_de:06412:1985">Riedberg</option>
+      <option value="de-DELFI_de:06412:60765">Uni Campus Riedberg</option>
+    </select>
+    <div id="departures">…</div>
+  </div>
+  <div id="load-status"></div>
+</div>
+<div id="info" hidden></div>
+<footer id="attribution">
+  Gebäude: 3D-Gebäudemodell HE LoD2, Datenquelle: Hessische Verwaltung für Bodenmanagement und Geoinformation (HVBG), <a href="https://www.govdata.de/dl-de/by-2-0" target="_blank" rel="noopener">Datenlizenz Deutschland – Namensnennung – 2.0</a>, <a href="https://hvbg.hessen.de/registry/spatial/dataset/d7997493-bdf2-4025-86e9-45c5432cdb4f" target="_blank" rel="noopener">Datensatz</a>, bearbeitet (trianguliert, zugeschnitten) ·
+  Gelände: DGM1 © HVBG, <a href="https://www.govdata.de/dl-de/zero-2-0" target="_blank" rel="noopener">dl-de/zero-2-0</a>, bearbeitet ·
+  <span id="attr-ortho">Luftbild (Gelände und Dachtexturen, bearbeitet: zugeschnitten, projiziert): Digitale Orthophotos DOP20 © HVBG, <a href="https://www.govdata.de/dl-de/zero-2-0" target="_blank" rel="noopener">dl-de/zero-2-0</a> ·</span>
+  Bäume: Baumkataster © Stadt Frankfurt am Main, Grünflächenamt (<a href="https://offenedaten.frankfurt.de/dcat/dataset/de-he-frankfurtam-baumkataster_op.html" target="_blank" rel="noopener">Offene Daten Frankfurt, Datensatz Baumkataster</a>), <a href="https://www.govdata.de/dl-de/by-2-0" target="_blank" rel="noopener">dl-de/by-2-0</a>, als 3D-Symbole dargestellt ·
+  Wetter: <a href="https://www.dwd.de/" target="_blank" rel="noopener">Deutscher Wetterdienst</a> (DWD Open Data, CC BY 4.0) via <a href="https://brightsky.dev/" target="_blank" rel="noopener">Bright Sky</a>; Ersatz: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> (CC BY 4.0) ·
+  Sonnenstand nach <a href="https://github.com/mourner/suncalc" target="_blank" rel="noopener">SunCalc</a>-Formeln (© Vladimir Agafonkin, BSD-2-Clause) ·
+  ÖPNV (Echtzeit/Fahrplan): <a href="https://transitous.org/" target="_blank" rel="noopener">Transitous</a>, Datenquellen siehe
+  <a href="https://transitous.org/sources/" target="_blank" rel="noopener">transitous.org/sources</a> (u. a. DELFI e.V.),
+  Routing © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap-Mitwirkende</a> ·
+  Straßen, Gehwege, Gleise, Laternen, Stadtmöbel: © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap-Mitwirkende</a>, <a href="https://opendatacommons.org/licenses/odbl/" target="_blank" rel="noopener">ODbL</a> (<span id="osm-info">OSM-Stand –</span>; fehlende Laternen schematisch ergänzt) ·
+  Oberflächen-Texturen: <a href="https://ambientcg.com/" target="_blank" rel="noopener">ambientCG</a> (CC0) ·
+  Echtzeit-Verspätungen: <a href="https://gtfs.de/" target="_blank" rel="noopener">gtfs.de</a> GTFS-RT (Quelle SIRI Hessen/RMV), <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de" target="_blank" rel="noopener">CC BY-SA 4.0</a>, nur beim lokalen Start über tools/serve.py, in der Online-Version nicht aktiv (abgeleitete Daten unter gleicher Lizenz) ·
+  Soll-Fahrplan für die Zuordnung: Schedule data generated by <a href="https://gtfs.de/" target="_blank" rel="noopener">gtfs.de</a> (Daten DELFI e.V.), <a href="https://creativecommons.org/licenses/by/4.0/deed.de" target="_blank" rel="noopener">CC BY 4.0</a> ·
+  Himmel: three.js Sky (Preetham-Modell) ·
+  Fassaden prozedural (keine offenen Fassadentexturen verfügbar) · Fahrzeugmodelle: eigene generische Blender-Modelle · 3D: <a href="https://threejs.org/" target="_blank" rel="noopener">three.js</a> (MIT) · Inspiriert von geneva3d.ch (kein Code übernommen) · Nicht-kommerzielles Open-Source-Projekt, eigener Code MIT · <a href="https://github.com/Kiboti/riedberg3d" target="_blank" rel="noopener">Quellcode, Lizenzen &amp; Kontakt</a> · Keine Gewähr für Fahrplan- und Echtzeitangaben
+</footer>
+<script type="module" src="app.js"></script>
+</body>
+</html>

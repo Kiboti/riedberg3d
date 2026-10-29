@@ -1,0 +1,5 @@
+Texturen von ambientCG (https://ambientcg.com), Lizenz: CC0 1.0 Universal (gemeinfrei).
+- asphalt_*.jpg  : Asphalt023S  (https://ambientcg.com/view?id=Asphalt023S)
+- paving_*.jpg   : PavingStones037 (https://ambientcg.com/view?id=PavingStones037)
+- gravel_*.jpg   : Gravel022 (https://ambientcg.com/view?id=Gravel022)
+Bearbeitung: Farbe 1024 px, Normal-/Rauheitskarte auf 512 px verkleinert, JPEG neu komprimiert.

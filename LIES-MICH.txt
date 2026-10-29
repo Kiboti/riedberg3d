@@ -1,0 +1,31 @@
+Riedberg 3D – Prototyp (privat, nicht kommerziell)
+==================================================
+
+Start
+-----
+Voraussetzung: Python 3 (Windows: https://www.python.org/downloads/ – bei der Installation "Add python.exe to PATH" anhaken)
+und ein aktueller Browser (Chrome, Edge, Firefox, Safari). Internet wird benötigt (three.js, Echtzeitdaten, Wetter, Luftbild).
+
+  Windows:     Doppelklick auf  Start-Windows.bat
+  Mac/Linux:   Doppelklick auf  Start-Mac-Linux.command
+               (Mac beim ersten Mal: Rechtsklick > Öffnen; ggf. im Terminal: chmod +x Start-Mac-Linux.command)
+  Manuell:     python3 tools/serve.py   und dann  http://localhost:8080/  öffnen
+
+Das Fenster mit dem Server offen lassen, solange die Seite läuft. Beenden: Fenster schließen bzw. Strg+C.
+
+Bedienung
+---------
+- Maus: linke Taste drehen, rechte Taste verschieben, Rad zoomen. Gebäude anklicken = Infos.
+- Fahrzeug (Modell oder Linienschild) anklicken = Linie, Richtung, Verspätung; Kamera folgt. Esc beendet das Folgen.
+- Haltestelle anklicken = Abfahrten mit Verspätungen.
+- "Grafik": Qualitätsstufe Mobil/Niedrig/Standard/Hoch (wird gespeichert). Bei Ruckeln eine Stufe niedriger wählen.
+- Uhrzeit-Regler: Sonne, Schatten, Himmel, Nacht mit Straßenbeleuchtung.
+
+Echtzeit
+--------
+Verspätungen/Ausfälle: gtfs.de GTFS-Realtime (SIRI Hessen), CC BY-SA 4.0 – über den lokalen Proxy in tools/serve.py
+(der Feed erlaubt keinen direkten Browser-Abruf). Datenverkehr ca. 10 MB pro Minute, solange die Seite offen ist.
+Ohne den Proxy (z. B. "python -m http.server") nutzt die Seite nur Transitous.
+
+Lizenzen/Quellen: siehe Fußzeile der Seite und README.md.
+Generierte Laternen (2.297 von 2.798) und Ampelphasen sind schematisch, nicht real.
